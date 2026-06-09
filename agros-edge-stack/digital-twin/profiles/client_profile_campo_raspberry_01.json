@@ -1,0 +1,51 @@
+{
+  "testbed_id": "campo_raspberry_01",
+  "cliente": {
+    "nome": "Campo Dimostrativo Raspberry Edge",
+    "contatto": "demo@agros.it"
+  },
+  "localizzazione": {
+    "lat": 39.6172,
+    "lon": 8.8242,
+    "altitudine_m": 130,
+    "comune": "Sardara",
+    "provincia": "SU",
+    "regione": "Sardegna"
+  },
+  "campo": {
+    "area_ha": 2.5,
+    "orientamento_filari": 180
+  },
+  "coltura_ref": "vite",
+  "coltura_dettagli": {
+    "varieta": "Cannonau",
+    "anno_impianto": 2015
+  },
+  "suolo_ref": "argilloso_medio",
+  "fenologia_mode": "calendar",
+  "fenologia_calendar": {
+    "anno": 2026,
+    "dormienza": "2025-11-15",
+    "germogliamento": "2026-03-20",
+    "fioritura": "2026-05-18",
+    "allegagione": "2026-06-08",
+    "invaiatura": "2026-08-01",
+    "maturazione": "2026-08-28",
+    "vendemmia": "2026-09-22"
+  },
+  "manual_phenology_override": null,
+  "overrides": {
+    "radici": {
+      "profondita_default_cm": 100
+    }
+  },
+  "irrigazione": {
+    "sistema": "goccia",
+    "portata_l_h_per_pianta": 4,
+    "automatica": true
+  },
+  "metadata": {
+    "version": 1,
+    "attivo": true
+  }
+}

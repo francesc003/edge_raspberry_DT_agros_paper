@@ -1,0 +1,112 @@
+{
+  "meta": {
+    "nome": "vite",
+    "nome_esteso": "Vite da vino (Vitis vinifera)",
+    "versione": "1.0.0",
+    "fonti": [
+      "FAO-56 Irrigation and Drainage Paper, Allen et al. 1998, Table 12 (Kc) e Table 22 (rooting depth, p)",
+      "OIV - Office International de la Vigne et du Vin, parametri fenologici standard",
+      "Williams & Matthews 1990, water relations of grapevines"
+    ],
+    "note": "Parametri tarati per viticoltura mediterranea, zona Sardegna. Per varietà specifiche (Cannonau, Vermentino, ecc.) usare il campo 'overrides' nel client_profile."
+  },
+
+  "fenologia": {
+    "_comment_fasi": "Fasi fenologiche standard della vite, in ordine temporale dalla dormienza alla vendemmia.",
+    "fasi": [
+      "dormienza",
+      "germogliamento",
+      "fioritura",
+      "allegagione",
+      "invaiatura",
+      "maturazione",
+      "vendemmia"
+    ],
+
+    "_comment_T_base_GDD": "Temperatura base FAO/OIV per la vite. Sotto i 10°C non c'è accumulo utile.",
+    "T_base_GDD": 10.0,
+
+    "_comment_GDD_soglie": "Soglie GDD cumulative (°C·day, da 1 gennaio) per il passaggio alle fasi successive. Valori medi per vitigni a maturazione media. Usati in v2 quando il phenology resolver passerà a modalità 'gdd'.",
+    "GDD_soglie": {
+      "germogliamento": 100,
+      "fioritura": 400,
+      "allegagione": 550,
+      "invaiatura": 1100,
+      "maturazione": 1500,
+      "vendemmia": 1800
+    },
+
+    "_comment_calendar_default": "Date approssimate di inizio fase per la Sardegna. Formato MM-DD (anno indipendente). Il cliente può fornire date più precise nel suo client_profile.",
+    "calendar_default": {
+      "dormienza": "11-15",
+      "germogliamento": "03-15",
+      "fioritura": "05-15",
+      "allegagione": "06-05",
+      "invaiatura": "07-30",
+      "maturazione": "08-25",
+      "vendemmia": "09-20"
+    }
+  },
+
+  "_comment_Kc_per_fase": "Coefficiente colturale Kc (adimensionale) per fase. ETc = Kc * ET0. Valori FAO-56 Tab.12 per vite da vino. Kc basso in dormienza (canopy assente), picco in fioritura/invaiatura (canopy completo), decrescente verso vendemmia.",
+  "Kc_per_fase": {
+    "dormienza": 0.30,
+    "germogliamento": 0.40,
+    "fioritura": 0.70,
+    "allegagione": 0.75,
+    "invaiatura": 0.70,
+    "maturazione": 0.60,
+    "vendemmia": 0.45
+  },
+
+  "radici": {
+    "_comment_profondita_default_cm": "Profondità radicale effettiva per il bilancio idrico. La vite ha radici profonde (fino a 2m) ma quelle attive per l'assorbimento idrico sono nei primi 100-150cm. Valore default conservativo.",
+    "profondita_default_cm": 120,
+    "_comment_profondita_range_cm": "Range tipico in vigneti mediterranei. Suoli più profondi o vite vecchia → valori più alti.",
+    "profondita_range_cm": [80, 200]
+  },
+
+  "stress_idrico": {
+    "_comment_p_depletion": "Fattore p FAO-56: frazione del TAW che la vite tollera di perdere prima dello stress. Valore tipico 0.45 per vite (FAO-56 Tab.22). La vite è considerata moderatamente sensibile allo stress idrico, soprattutto in fioritura-invaiatura. Per produzioni di qualità si applica deficit controllato (p più alto), ma per il default si usa il valore standard.",
+    "p_depletion": 0.45
+  },
+
+  "alert_rules": [
+    {
+      "_comment": "Stress idrico in avvicinamento: SWD ha superato la soglia derivata da p * TAW. La soglia 'SWD_warning' viene calcolata a runtime dal motore alert in base al suolo.",
+      "id": "stress_idrico_warning",
+      "indice": "SWD",
+      "operatore": ">",
+      "soglia": "SWD_warning",
+      "livello": "warning",
+      "messaggio": "Stress idrico in avvicinamento (SWD={valore} mm). Valutare irrigazione nei prossimi giorni."
+    },
+    {
+      "_comment": "Stress idrico critico: SWD ha superato la soglia critica (tipicamente 1.5 * SWD_warning o il valore massimo TAW).",
+      "id": "stress_idrico_critical",
+      "indice": "SWD",
+      "operatore": ">",
+      "soglia": "SWD_critical",
+      "livello": "critical",
+      "messaggio": "Stress idrico critico (SWD={valore} mm). Irrigazione necessaria per evitare danni alla coltura."
+    },
+    {
+      "_comment": "Rischio gelata tardiva: tipica della vite in germogliamento (aprile-maggio in Sardegna). Soglia conservativa a 2°C che considera la differenza tra T_aria misurata e T_germoglio (può essere 2-3°C più bassa).",
+      "id": "rischio_gelata",
+      "indice": "T_min_previsto_7gg",
+      "operatore": "<",
+      "soglia": 2.0,
+      "livello": "critical",
+      "messaggio": "Rischio gelata nei prossimi giorni (T min prevista {valore}°C). Attivare protezioni antibrina."
+    },
+    {
+      "_comment": "Stress termico estivo: temperature massime sopra 35°C causano blocco fotosintetico nella vite.",
+      "id": "stress_termico",
+      "indice": "T_max_previsto_7gg",
+      "operatore": ">",
+      "soglia": 35.0,
+      "livello": "warning",
+      "messaggio": "Stress termico previsto (T max {valore}°C). Possibile blocco fotosintetico e disidratazione."
+    }
+  ]
+}

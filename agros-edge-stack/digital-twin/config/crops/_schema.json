@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Crop Config Schema",
+  "description": "Schema di validazione per i file di configurazione delle colture (crops/*.json). Tutti i valori numerici sono in unità SI o standard agronomiche: temperature in gradi Celsius, profondità in centimetri, SWD in millimetri, GDD in gradi-giorno (°C·day), Kc adimensionale.",
+  "type": "object",
+  "required": ["meta", "fenologia", "Kc_per_fase", "radici", "stress_idrico", "alert_rules"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["nome", "versione", "fonti"],
+      "properties": {
+        "nome": { "type": "string", "description": "Identificativo coltura (es. 'vite', 'olivo'). Deve corrispondere al nome del file." },
+        "nome_esteso": { "type": "string", "description": "Nome leggibile (es. 'Vite da vino')." },
+        "versione": { "type": "string", "description": "Versione del config in formato semver (es. '1.0.0')." },
+        "fonti": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Riferimenti bibliografici dei valori usati (es. 'FAO-56 Irrigation Paper, Tab.12')."
+        },
+        "note": { "type": "string", "description": "Note libere per il maintainer." }
+      }
+    },
+    "fenologia": {
+      "type": "object",
+      "required": ["fasi", "T_base_GDD", "calendar_default"],
+      "properties": {
+        "fasi": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Lista ordinata delle fasi fenologiche per questa coltura, dalla prima all'ultima della stagione."
+        },
+        "T_base_GDD": {
+          "type": "number",
+          "description": "Temperatura base per il calcolo dei Growing Degree Days (°C). Sotto questa temperatura non c'è accumulo termico utile alla crescita."
+        },
+        "GDD_soglie": {
+          "type": "object",
+          "description": "Soglie cumulative di GDD (in °C·day) per il passaggio da una fase alla successiva. Usate dal phenology resolver in modalità 'gdd'. Per il prototipo si usa 'calendar', ma queste soglie sono presenti per l'evoluzione v2.",
+          "additionalProperties": { "type": "number" }
+        },
+        "calendar_default": {
+          "type": "object",
+          "description": "Date di default (formato MM-DD, anno indipendente) di inizio di ogni fase. Usate dal phenology resolver in modalità 'calendar'. Riferite al clima mediterraneo (zona Sardegna). Possono essere override per cliente.",
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[0-9]{2}-[0-9]{2}$"
+          }
+        }
+      }
+    },
+    "Kc_per_fase": {
+      "type": "object",
+      "description": "Coefficiente colturale Kc (adimensionale) per ogni fase fenologica. Usato nel calcolo del consumo idrico ETc = Kc * ET0.",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 2
+      }
+    },
+    "radici": {
+      "type": "object",
+      "required": ["profondita_default_cm"],
+      "properties": {
+        "profondita_default_cm": {
+          "type": "number",
+          "description": "Profondità radicale di default in centimetri. Usata nel calcolo del TAW (Total Available Water) insieme ai parametri del suolo."
+        },
+        "profondita_range_cm": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "Range tipico [min, max] di profondità radicale per questa coltura, in cm. Solo informativo."
+        }
+      }
+    },
+    "stress_idrico": {
+      "type": "object",
+      "required": ["p_depletion"],
+      "properties": {
+        "p_depletion": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Fattore p di depletion (FAO-56): frazione del TAW che la coltura può perdere prima di andare in stress idrico. Vite ~0.45, olivo ~0.65. Usato per calcolare la soglia di SWD warning."
+        }
+      }
+    },
+    "alert_rules": {
+      "type": "array",
+      "description": "Regole di alert deterministiche. Ogni regola definisce una condizione, un livello (info/warning/critical) e un messaggio. Il motore alert le applica sugli indici calcolati.",
+      "items": {
+        "type": "object",
+        "required": ["id", "indice", "operatore", "soglia", "livello", "messaggio"],
+        "properties": {
+          "id": { "type": "string", "description": "Identificativo univoco della regola." },
+          "indice": { "type": "string", "description": "Nome dell'indice o variabile da valutare (es. 'SWD', 'T_min_previsto_7gg')." },
+          "operatore": { "type": "string", "enum": [">", ">=", "<", "<=", "=="], "description": "Operatore di confronto." },
+          "soglia": { "type": ["number", "string"], "description": "Valore di soglia. Può essere un numero o un riferimento simbolico tipo 'SWD_warning' che verrà risolto a runtime dal motore." },
+          "livello": { "type": "string", "enum": ["info", "warning", "critical"], "description": "Livello di severità dell'alert." },
+          "messaggio": { "type": "string", "description": "Messaggio mostrato all'utente (può contenere placeholder {valore} che vengono sostituiti a runtime)." }
+        }
+      }
+    }
+  }
+}
