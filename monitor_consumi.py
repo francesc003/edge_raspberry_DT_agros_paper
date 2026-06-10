@@ -2,29 +2,35 @@
 """
 Monitor dei consumi del container Digital Twin (AGROS edge stack).
 
-Campiona a intervalli regolari l'uso di CPU e memoria del SOLO container
-`agros-digital-twin`, usando `docker stats`. Distingue automaticamente le fasi
-di IDLE (attesa tra un burst e l'altro) dalle fasi di CALCOLO (picco di CPU
-quando arriva un nuovo burst e il DT esegue la pipeline).
+Misura CPU e memoria del SOLO container `agros-digital-twin` via `docker stats`,
+con due modalita' pensate per le esigenze del paper.
 
-Produce:
-  - log a schermo in tempo reale
-  - un file CSV con tutti i campioni (per grafici nel paper)
-  - un riepilogo statistico a fine sessione (CPU/RAM medie in idle vs calcolo)
+============================================================================
+NOTA TECNICA IMPORTANTE (leggere prima di interpretare i numeri)
+============================================================================
+Il calcolo del DT dura pochi millisecondi (~4 ms, vedi latency.log), mentre
+`docker stats` aggiorna i suoi valori circa una volta al secondo. Con burst
+ogni 10 minuti, il campionamento esterno NON riesce a "vedere" il picco di
+calcolo quasi mai: cattura bene l'IDLE (99.99% del tempo) ma manca l'istante
+del calcolo.
 
-NON misura il consumo energetico in Watt (per quello serve un wattmetro
-hardware). Misura l'impronta computazionale, che è il proxy software dei
-consumi ed è sufficiente per confrontare idle vs calcolo e laptop vs Pi.
+Per questo il consumo va raccontato con DUE fonti complementari:
+  1. Questo script  -> consumo in IDLE e a regime (preciso)
+  2. latency.log    -> durata reale del calcolo (~4 ms), il vero "costo
+                       computazionale" del picco
 
-Uso:
-    python3 monitor_consumi.py                      # campiona ogni 2s, all'infinito
-    python3 monitor_consumi.py --interval 1         # ogni 1 secondo
-    python3 monitor_consumi.py --duration 3600      # per 1 ora poi termina
-    python3 monitor_consumi.py --container agros-digital-twin --out consumi.csv
+La modalita' --mode stress etichetta i campioni come carico sostenuto: utile
+se forzi il DT a calcolare di continuo per vedere il picco con docker stats
+(limite superiore teorico).
+============================================================================
 
-Interrompi con Ctrl+C: stampa comunque il riepilogo finale.
+Uso tipico:
+    python3 monitor_consumi.py                          # idle/regime, Ctrl+C per fermare
+    python3 monitor_consumi.py --interval 0.5
+    python3 monitor_consumi.py --duration 1800 --out consumi_idle.csv
+    python3 monitor_consumi.py --mode stress --out consumi_picco.csv
 
-Prerequisiti: lo stack deve essere in esecuzione (docker compose up).
+Prerequisiti: stack in esecuzione. Python 3.7+, nessuna libreria esterna.
 """
 
 import argparse
@@ -32,130 +38,155 @@ import csv
 import json
 import signal
 import subprocess
-import sys
 import time
 from datetime import datetime, timezone
 
-# Soglia di CPU% sopra la quale consideriamo il container "in calcolo".
-# Sotto questa soglia è considerato "idle". Regolabile via --cpu-threshold.
+
+DEFAULT_CONTAINER = "agros-digital-twin"
 DEFAULT_CPU_THRESHOLD = 5.0
 
 
 def parse_args():
-    p = argparse.ArgumentParser(description="Monitor consumi container Digital Twin")
-    p.add_argument("--container", default="agros-digital-twin",
-                   help="Nome del container da monitorare (default: agros-digital-twin)")
-    p.add_argument("--interval", type=float, default=2.0,
-                   help="Intervallo di campionamento in secondi (default: 2)")
+    p = argparse.ArgumentParser(
+        description="Monitor consumi container Digital Twin (AGROS edge).",
+    )
+    p.add_argument("--container", default=DEFAULT_CONTAINER,
+                   help=f"Nome container (default: {DEFAULT_CONTAINER})")
+    p.add_argument("--interval", type=float, default=1.0,
+                   help="Intervallo di campionamento in secondi (default: 1.0)")
     p.add_argument("--duration", type=float, default=None,
-                   help="Durata totale in secondi (default: infinito, fino a Ctrl+C)")
-    p.add_argument("--out", default="consumi_dt.csv",
-                   help="File CSV di output (default: consumi_dt.csv)")
+                   help="Durata totale in secondi (default: infinito)")
+    p.add_argument("--out", default="consumi.csv",
+                   help="File CSV di output (default: consumi.csv)")
     p.add_argument("--cpu-threshold", type=float, default=DEFAULT_CPU_THRESHOLD,
-                   help=f"Soglia CPU%% idle/calcolo (default: {DEFAULT_CPU_THRESHOLD})")
+                   help=f"Soglia CPU%% calcolo/idle (default: {DEFAULT_CPU_THRESHOLD})")
+    p.add_argument("--mode", choices=["monitor", "stress"], default="monitor",
+                   help="monitor: consumo reale; stress: carico sostenuto")
+    p.add_argument("--quiet", action="store_true",
+                   help="Non stampare ogni campione")
     return p.parse_args()
 
 
-def get_stats(container):
-    """
-    Legge una singola riga di statistiche dal container via `docker stats`.
-    Ritorna un dict con cpu_pct, mem_mb, mem_pct, oppure None se il container
-    non è raggiungibile.
-    """
+def get_sample(container):
     try:
         out = subprocess.run(
             ["docker", "stats", "--no-stream", "--format", "{{json .}}", container],
-            capture_output=True, text=True, timeout=15,
+            capture_output=True, text=True, timeout=10,
         )
     except (subprocess.TimeoutExpired, FileNotFoundError) as e:
-        print(f"[errore] docker stats non disponibile: {e}", file=sys.stderr)
-        return None
+        return {"error": str(e)}
 
-    if out.returncode != 0 or not out.stdout.strip():
+    if out.returncode != 0:
+        return {"error": out.stderr.strip() or "docker stats fallito"}
+
+    line = out.stdout.strip()
+    if not line:
         return None
 
     try:
-        d = json.loads(out.stdout.strip().splitlines()[0])
-    except (json.JSONDecodeError, IndexError):
-        return None
+        d = json.loads(line)
+    except json.JSONDecodeError:
+        return {"error": f"output non JSON: {line[:80]}"}
 
-    # CPU: stringa tipo "0.15%"
-    cpu_pct = float(d.get("CPUPerc", "0%").replace("%", "").strip() or 0)
-
-    # MemUsage: stringa tipo "45.2MiB / 7.75GiB"
-    mem_raw = d.get("MemUsage", "0MiB / 0MiB").split("/")[0].strip()
-    mem_mb = to_mb(mem_raw)
-    mem_pct = float(d.get("MemPerc", "0%").replace("%", "").strip() or 0)
-
-    return {"cpu_pct": cpu_pct, "mem_mb": mem_mb, "mem_pct": mem_pct}
-
-
-def to_mb(s):
-    """Converte una stringa tipo '45.2MiB' / '1.2GiB' / '512KiB' in MB."""
-    s = s.strip()
+    cpu_str = d.get("CPUPerc", "0%").replace("%", "").strip()
     try:
-        if s.endswith("GiB"):
-            return float(s[:-3]) * 1024
-        if s.endswith("MiB"):
-            return float(s[:-3])
-        if s.endswith("KiB"):
-            return float(s[:-3]) / 1024
-        if s.endswith("B"):
-            return float(s[:-1]) / (1024 * 1024)
+        cpu = float(cpu_str)
     except ValueError:
-        pass
+        cpu = 0.0
+
+    mem_mb = 0.0
+    mem_usage = d.get("MemUsage", "")
+    if "/" in mem_usage:
+        mem_mb = parse_mem_to_mb(mem_usage.split("/")[0].strip())
+
+    mem_pct_str = d.get("MemPerc", "0%").replace("%", "").strip()
+    try:
+        mem_pct = float(mem_pct_str)
+    except ValueError:
+        mem_pct = 0.0
+
+    return {"cpu_pct": cpu, "mem_mb": mem_mb, "mem_pct": mem_pct}
+
+
+def parse_mem_to_mb(s):
+    s = s.strip()
+    units = {"KiB": 1 / 1024, "MiB": 1, "GiB": 1024, "B": 1 / (1024 * 1024),
+             "kB": 1 / 1000, "MB": 1, "GB": 1000}
+    for u, factor in units.items():
+        if s.endswith(u):
+            try:
+                return float(s[:-len(u)]) * factor
+            except ValueError:
+                return 0.0
     return 0.0
 
 
 def main():
     args = parse_args()
 
+    print("=" * 64)
+    print("Monitor consumi — container Digital Twin (AGROS edge)")
+    print("=" * 64)
+    print(f"Container:   {args.container}")
+    print(f"Intervallo:  {args.interval}s")
+    print(f"Modalita':   {args.mode}")
+    print(f"Output:      {args.out}")
+    print(f"Durata:      {args.duration}s" if args.duration else "Durata:      infinita (Ctrl+C per fermare)")
+    print("")
+    print("NB: docker stats campiona ~1/s; il calcolo del DT dura pochi ms.")
+    print("    L'idle e' misurato bene; per il picco vedi anche latency.log.")
+    print("")
+
     samples = []
-    running = {"flag": True}
+    csv_file = open(args.out, "w", newline="")
+    writer = csv.writer(csv_file)
+    writer.writerow(["timestamp", "elapsed_s", "cpu_pct", "mem_mb", "mem_pct", "stato"])
+
+    start = time.time()
+    running = {"v": True}
 
     def stop(signum, frame):
-        running["flag"] = False
-
+        running["v"] = False
     signal.signal(signal.SIGINT, stop)
     signal.signal(signal.SIGTERM, stop)
 
-    print(f"Monitoraggio consumi container '{args.container}'")
-    print(f"Intervallo: {args.interval}s | Soglia idle/calcolo: {args.cpu_threshold}% CPU")
-    print(f"Output CSV: {args.out}")
-    if args.duration:
-        print(f"Durata: {args.duration}s")
-    print("Premi Ctrl+C per terminare e vedere il riepilogo.\n")
-    print(f"{'timestamp':<20} {'CPU%':>8} {'MEM(MB)':>10} {'MEM%':>7}  stato")
-    print("-" * 60)
-
-    # Apri il CSV e scrivi l'header
-    csv_file = open(args.out, "w", newline="")
-    writer = csv.writer(csv_file)
-    writer.writerow(["timestamp", "cpu_pct", "mem_mb", "mem_pct", "stato"])
-
-    t_start = time.time()
-    while running["flag"]:
-        if args.duration and (time.time() - t_start) >= args.duration:
+    first_error = True
+    while running["v"]:
+        loop_t = time.time()
+        elapsed = loop_t - start
+        if args.duration and elapsed >= args.duration:
             break
 
-        stats = get_stats(args.container)
-        ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
-
-        if stats is None:
-            print(f"{ts:<20} {'--':>8} {'--':>10} {'--':>7}  container non raggiungibile")
+        s = get_sample(args.container)
+        if s is None:
+            if first_error:
+                print(f"[attesa] container '{args.container}' non ancora pronto...")
+                first_error = False
+            time.sleep(args.interval)
+            continue
+        if "error" in s:
+            print(f"[errore] {s['error']}")
             time.sleep(args.interval)
             continue
 
-        stato = "CALCOLO" if stats["cpu_pct"] >= args.cpu_threshold else "idle"
-        samples.append({**stats, "stato": stato})
-        writer.writerow([ts, stats["cpu_pct"], round(stats["mem_mb"], 2),
-                         stats["mem_pct"], stato])
+        if args.mode == "stress":
+            stato = "CARICO"
+        else:
+            stato = "CALCOLO" if s["cpu_pct"] >= args.cpu_threshold else "idle"
+
+        ts = datetime.now(timezone.utc).isoformat()
+        writer.writerow([ts, f"{elapsed:.1f}", f"{s['cpu_pct']:.2f}",
+                         f"{s['mem_mb']:.1f}", f"{s['mem_pct']:.2f}", stato])
         csv_file.flush()
+        samples.append({"cpu_pct": s["cpu_pct"], "mem_mb": s["mem_mb"], "stato": stato})
 
-        print(f"{ts:<20} {stats['cpu_pct']:>7.2f}% {stats['mem_mb']:>9.1f} "
-              f"{stats['mem_pct']:>6.2f}%  {stato}")
+        if not args.quiet:
+            marker = " <-- calcolo" if s["cpu_pct"] >= args.cpu_threshold else ""
+            print(f"  [{elapsed:7.1f}s] CPU {s['cpu_pct']:6.2f}%  RAM {s['mem_mb']:7.1f} MB  ({stato}){marker}")
 
-        time.sleep(args.interval)
+        sleep_left = args.interval - (time.time() - loop_t)
+        if sleep_left > 0:
+            time.sleep(sleep_left)
 
     csv_file.close()
     print_summary(samples, args)
@@ -166,35 +197,47 @@ def print_summary(samples, args):
         print("\nNessun campione raccolto.")
         return
 
-    idle = [s for s in samples if s["stato"] == "idle"]
-    calcolo = [s for s in samples if s["stato"] == "CALCOLO"]
-
     def avg(lst, key):
         return sum(x[key] for x in lst) / len(lst) if lst else 0.0
 
     def mx(lst, key):
         return max((x[key] for x in lst), default=0.0)
 
-    print("\n" + "=" * 60)
+    idle = [s for s in samples if s["stato"] == "idle"]
+    calcolo = [s for s in samples if s["stato"] in ("CALCOLO", "CARICO")]
+
+    print("\n" + "=" * 64)
     print("RIEPILOGO CONSUMI")
-    print("=" * 60)
+    print("=" * 64)
     print(f"Campioni totali:   {len(samples)}")
-    print(f"  in idle:         {len(idle)}")
-    print(f"  in calcolo:      {len(calcolo)}")
+    print(f"  idle:            {len(idle)}")
+    print(f"  calcolo/carico:  {len(calcolo)}")
     print("")
-    print("Fase IDLE (container in attesa tra i burst):")
-    print(f"  CPU media:       {avg(idle, 'cpu_pct'):.2f}%")
-    print(f"  CPU max:         {mx(idle, 'cpu_pct'):.2f}%")
-    print(f"  RAM media:       {avg(idle, 'mem_mb'):.1f} MB")
-    print("")
-    print("Fase CALCOLO (container che elabora un burst):")
-    print(f"  CPU media:       {avg(calcolo, 'cpu_pct'):.2f}%")
-    print(f"  CPU max:         {mx(calcolo, 'cpu_pct'):.2f}%")
-    print(f"  RAM media:       {avg(calcolo, 'mem_mb'):.1f} MB")
-    print(f"  RAM max:         {mx(calcolo, 'mem_mb'):.1f} MB")
-    print("")
-    print(f"Dati grezzi salvati in: {args.out}")
-    print("Per il paper: usa il CSV per il grafico CPU nel tempo (picchi = calcoli).")
+
+    if idle:
+        print("IDLE (container in attesa tra i burst):")
+        print(f"  CPU media:       {avg(idle, 'cpu_pct'):.2f}%")
+        print(f"  CPU max:         {mx(idle, 'cpu_pct'):.2f}%")
+        print(f"  RAM media:       {avg(idle, 'mem_mb'):.1f} MB")
+        print(f"  RAM max:         {mx(idle, 'mem_mb'):.1f} MB")
+        print("")
+
+    if calcolo:
+        print("CALCOLO / CARICO (CPU sopra soglia):")
+        print(f"  campioni:        {len(calcolo)}")
+        print(f"  CPU media:       {avg(calcolo, 'cpu_pct'):.2f}%")
+        print(f"  CPU max:         {mx(calcolo, 'cpu_pct'):.2f}%")
+        print(f"  RAM media:       {avg(calcolo, 'mem_mb'):.1f} MB")
+        print(f"  RAM max:         {mx(calcolo, 'mem_mb'):.1f} MB")
+        print("")
+    else:
+        print("Nessun campione di calcolo catturato (atteso in modalita' monitor:")
+        print("il calcolo dura pochi ms e sfugge al campionamento al secondo).")
+        print("Per il costo del calcolo usa latency.log (campo dt_core_ms).")
+        print("")
+
+    print(f"Dati grezzi: {args.out}")
+    print("Per il paper: usa il CSV per il grafico CPU/RAM nel tempo.")
 
 
 if __name__ == "__main__":
