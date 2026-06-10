@@ -1,0 +1,116 @@
+{
+  "meta": {
+    "nome": "olivo",
+    "nome_esteso": "Olivo (Olea europaea)",
+    "versione": "1.0.0",
+    "fonti": [
+      "FAO-56 Irrigation and Drainage Paper, Allen et al. 1998, Table 12 (Kc) e Table 22 (rooting depth, p)",
+      "Orgaz et al. 2006, water requirements of olive orchards",
+      "Pastor et al. 2007, fenologia olivo mediterraneo"
+    ],
+    "note": "Parametri per olivo adulto in produzione (>5 anni). Per oliveti giovani i Kc vanno ridotti del 20-30% in funzione della copertura del suolo. L'olivo è una sempreverde, quindi non ha fase di dormienza vera ma una stasi vegetativa invernale."
+  },
+
+  "fenologia": {
+    "_comment_fasi": "Fasi fenologiche dell'olivo. Differiscono dalla vite: sempreverde, niente dormienza completa, ma fasi di sviluppo del frutto.",
+    "fasi": [
+      "stasi_invernale",
+      "ripresa_vegetativa",
+      "fioritura",
+      "allegagione",
+      "indurimento_nocciolo",
+      "inolizione",
+      "maturazione",
+      "raccolta"
+    ],
+
+    "_comment_T_base_GDD": "Temperatura base per l'olivo. Diversi autori usano valori tra 9 e 13°C. 12.5°C è la media più citata per olivo mediterraneo.",
+    "T_base_GDD": 12.5,
+
+    "_comment_GDD_soglie": "Soglie GDD cumulative (°C·day) per il passaggio alle fasi. Valori orientativi per olivo mediterraneo. Da raffinare con osservazioni in campo.",
+    "GDD_soglie": {
+      "ripresa_vegetativa": 150,
+      "fioritura": 500,
+      "allegagione": 650,
+      "indurimento_nocciolo": 1000,
+      "inolizione": 1600,
+      "maturazione": 2100,
+      "raccolta": 2400
+    },
+
+    "_comment_calendar_default": "Date approssimate per la Sardegna. L'olivo fiorisce più tardi della vite (maggio-giugno) e la raccolta è autunno-inverno.",
+    "calendar_default": {
+      "stasi_invernale": "12-01",
+      "ripresa_vegetativa": "03-20",
+      "fioritura": "05-20",
+      "allegagione": "06-10",
+      "indurimento_nocciolo": "07-15",
+      "inolizione": "09-01",
+      "maturazione": "10-15",
+      "raccolta": "11-15"
+    }
+  },
+
+  "_comment_Kc_per_fase": "Kc per olivo da FAO-56 Tab.12 (oliveto adulto, copertura suolo 40-60%). L'olivo ha Kc più stabili rispetto alla vite perché sempreverde: il valore non scende drasticamente in inverno. Kc più alti durante l'inolizione (massima domanda idrica).",
+  "Kc_per_fase": {
+    "stasi_invernale": 0.50,
+    "ripresa_vegetativa": 0.55,
+    "fioritura": 0.65,
+    "allegagione": 0.70,
+    "indurimento_nocciolo": 0.70,
+    "inolizione": 0.70,
+    "maturazione": 0.65,
+    "raccolta": 0.60
+  },
+
+  "radici": {
+    "_comment_profondita_default_cm": "L'olivo ha apparato radicale espanso, attivo principalmente nei primi 100-150cm. Valore default per olivo adulto in suolo profondo.",
+    "profondita_default_cm": 150,
+    "_comment_profondita_range_cm": "Range tipico in oliveti mediterranei. Olivi su suoli rocciosi o poco profondi → valori più bassi.",
+    "profondita_range_cm": [80, 250]
+  },
+
+  "stress_idrico": {
+    "_comment_p_depletion": "L'olivo è una delle colture più tolleranti allo stress idrico (FAO-56 Tab.22 indica p=0.65). Sopporta deficit prolungati senza danni gravi, anche se la produzione cala. Per questo le soglie SWD sono più alte rispetto alla vite.",
+    "p_depletion": 0.65
+  },
+
+  "alert_rules": [
+    {
+      "_comment": "Stress idrico in avvicinamento per l'olivo. Soglia più tollerante che per la vite (p più alto).",
+      "id": "stress_idrico_warning",
+      "indice": "SWD",
+      "operatore": ">",
+      "soglia": "SWD_warning",
+      "livello": "warning",
+      "messaggio": "Stress idrico in avvicinamento (SWD={valore} mm). L'olivo tollera deficit moderati, ma valutare irrigazione di soccorso se fase critica (fioritura, inolizione)."
+    },
+    {
+      "_comment": "Stress critico anche per l'olivo: oltre soglia critica si rischia caduta frutti e calo produzione drastico.",
+      "id": "stress_idrico_critical",
+      "indice": "SWD",
+      "operatore": ">",
+      "soglia": "SWD_critical",
+      "livello": "critical",
+      "messaggio": "Stress idrico critico (SWD={valore} mm). Rischio cascola, danni alla produzione. Irrigazione necessaria."
+    },
+    {
+      "_comment": "L'olivo è più sensibile al gelo dell'olio in inverno (sotto -7°C danni alla pianta), ma in primavera durante la fioritura anche 0°C è critico. Soglia 1°C conservativa per la primavera.",
+      "id": "rischio_gelata",
+      "indice": "T_min_previsto_7gg",
+      "operatore": "<",
+      "soglia": 1.0,
+      "livello": "critical",
+      "messaggio": "Rischio gelata (T min prevista {valore}°C). Critico in fase di fioritura o frutto giovane."
+    },
+    {
+      "_comment": "L'olivo è più tollerante al caldo della vite, ma sopra 40°C in fioritura si ha aborto fiorale.",
+      "id": "stress_termico",
+      "indice": "T_max_previsto_7gg",
+      "operatore": ">",
+      "soglia": 38.0,
+      "livello": "warning",
+      "messaggio": "Stress termico previsto (T max {valore}°C). In fioritura possibile aborto fiorale."
+    }
+  ]
+}

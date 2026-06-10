@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "nome": "argilloso_medio",
+    "nome_esteso": "Suolo argilloso medio (clay loam)",
+    "versione": "1.0.0",
+    "fonti": [
+      "FAO-56 Irrigation and Drainage Paper, Allen et al. 1998, Table 19 (soil water characteristics)",
+      "Saxton & Rawls 2006, Soil Water Characteristic Estimates by Texture"
+    ],
+    "note": "Suolo medio-pesante tipico di molte zone della Sardegna interna (es. Sardara). Buona capacità di ritenzione idrica ma drenaggio lento. Per suoli diversi creare un nuovo file (es. sabbioso.json, franco.json)."
+  },
+
+  "tessitura": {
+    "_comment_categoria": "Categoria USDA semplificata. Argilloso = >35% argilla.",
+    "categoria": "argilloso",
+
+    "_comment_percentuali": "Composizione indicativa. Da rilevare con analisi del suolo per ogni cliente specifico.",
+    "percentuali": {
+      "sabbia": 25,
+      "limo": 30,
+      "argilla": 45
+    }
+  },
+
+  "idrologia": {
+    "_comment_FC_mm_per_m": "Field Capacity per suolo argilloso medio. I suoli argillosi hanno FC alta perché trattengono molta acqua. Valore FAO-56 Tab.19 per clay/clay loam.",
+    "FC_mm_per_m": 380,
+
+    "_comment_WP_mm_per_m": "Wilting Point alto nei suoli argillosi: anche se trattengono molta acqua, una parte significativa è legata troppo fortemente per essere assorbita dalle radici.",
+    "WP_mm_per_m": 215,
+
+    "_comment_TAW_mm_per_m_calcolato": "TAW = FC - WP = 380 - 215 = 165 mm/m. Valore cachato per riferimento, ma il motore lo ricalcola sempre da FC e WP.",
+    "TAW_mm_per_m_calcolato": 165,
+
+    "_comment_infiltrazione_mm_h": "Velocità di infiltrazione bassa: i suoli argillosi sono lenti a far penetrare l'acqua, alto rischio di runoff con piogge intense.",
+    "infiltrazione_mm_h": 5
+  }
+}

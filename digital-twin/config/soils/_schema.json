@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Soil Config Schema",
+  "description": "Schema di validazione per i file di configurazione dei suoli (soils/*.json). Tutti i valori in unità standard: contenuti idrici in mm/m (millimetri di acqua per metro di profondità di suolo), tessitura come categoria.",
+  "type": "object",
+  "required": ["meta", "tessitura", "idrologia"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["nome", "versione", "fonti"],
+      "properties": {
+        "nome": { "type": "string", "description": "Identificativo del suolo (es. 'argilloso_medio'). Deve corrispondere al nome del file." },
+        "nome_esteso": { "type": "string", "description": "Descrizione leggibile." },
+        "versione": { "type": "string", "description": "Versione semver del config." },
+        "fonti": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Riferimenti bibliografici dei valori."
+        },
+        "note": { "type": "string" }
+      }
+    },
+    "tessitura": {
+      "type": "object",
+      "required": ["categoria"],
+      "properties": {
+        "categoria": {
+          "type": "string",
+          "enum": ["sabbioso", "sabbioso_franco", "franco_sabbioso", "franco", "franco_limoso", "limoso", "franco_argilloso", "argilloso_limoso", "argilloso"],
+          "description": "Categoria tessiturale USDA semplificata."
+        },
+        "percentuali": {
+          "type": "object",
+          "description": "Composizione percentuale (opzionale, solo se nota).",
+          "properties": {
+            "sabbia": { "type": "number", "minimum": 0, "maximum": 100 },
+            "limo": { "type": "number", "minimum": 0, "maximum": 100 },
+            "argilla": { "type": "number", "minimum": 0, "maximum": 100 }
+          }
+        }
+      }
+    },
+    "idrologia": {
+      "type": "object",
+      "required": ["FC_mm_per_m", "WP_mm_per_m"],
+      "properties": {
+        "FC_mm_per_m": {
+          "type": "number",
+          "description": "Field Capacity (capacità di campo) in mm di acqua per metro di profondità di suolo. È il contenuto idrico massimo che il suolo trattiene contro la gravità."
+        },
+        "WP_mm_per_m": {
+          "type": "number",
+          "description": "Wilting Point (punto di appassimento) in mm/m. È il contenuto idrico sotto il quale la pianta non riesce più ad assorbire acqua."
+        },
+        "TAW_mm_per_m_calcolato": {
+          "type": "number",
+          "description": "Total Available Water = FC - WP, in mm/m. Calcolato e cachato, opzionale (può essere ricalcolato dal motore)."
+        },
+        "infiltrazione_mm_h": {
+          "type": "number",
+          "description": "Velocità di infiltrazione tipica (mm/h). Usata per modellare runoff in v2."
+        }
+      }
+    }
+  }
+}

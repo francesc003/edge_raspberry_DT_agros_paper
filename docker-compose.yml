@@ -1,0 +1,62 @@
+# AGROS Edge Stack — orchestrazione dei 3 container per il Raspberry Pi 5
+#
+#   mongo          database locale (immagine ufficiale)
+#   node-simulator simula 10 nodi LoRa -> scrive su Mongo
+#   digital-twin   legge da Mongo, esegue il DT, decide l'irrigazione
+#
+# Avvio:   docker compose up --build
+# Stop:    docker compose down
+# Logs:    docker compose logs -f digital-twin
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: agros-mongo
+    # Nessuna porta esposta all'esterno: i container si parlano nella rete interna.
+    # Per ispezionare il DB dall'host, scommenta le righe ports sotto.
+    # ports:
+    #   - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  node-simulator:
+    build: ./node-simulator
+    container_name: agros-simulator
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      MONGO_URL: mongodb://mongo:27017
+      MONGO_DB: agros
+      TESTBED_ID: campo_raspberry_01
+      N_NODI: "10"
+      REAL_TIME: "true"          # usa l'ora reale corrente per ogni burst
+      BURST_INTERVAL_SEC: "600"  # 600s = 10 minuti reali tra un burst e l'altro
+      RESET_ON_START: "true"
+    restart: unless-stopped
+
+  digital-twin:
+    build: ./digital-twin
+    container_name: agros-digital-twin
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      MONGO_URL: mongodb://mongo:27017
+      MONGO_DB: agros
+      TESTBED_ID: campo_raspberry_01
+      POLL_INTERVAL_MS: "30000"  # 30s: reattivo per burst ogni 10min, idle pulito
+      LOG_FILE: /app/logs/irrigation.log
+      LATENCY_LOG: /app/logs/latency.log
+    volumes:
+      # I log dell'irrigazione restano accessibili sull'host del Raspberry
+      - ./logs:/app/logs
+    restart: unless-stopped
+
+volumes:
+  mongo-data:

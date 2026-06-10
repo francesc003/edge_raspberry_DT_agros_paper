@@ -1,0 +1,6 @@
+node_modules
+logs
+test_e2e.mjs
+test_latency.mjs
+test_weather.mjs
+mock_mongo.mjs
