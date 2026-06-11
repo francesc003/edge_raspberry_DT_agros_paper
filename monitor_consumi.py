@@ -125,7 +125,7 @@ def main():
     args = parse_args()
 
     print("=" * 64)
-    print("Monitor consumi — container Digital Twin (AGROS edge)")
+    print("Monitor consumi - container Digital Twin (AGROS edge)")
     print("=" * 64)
     print(f"Container:   {args.container}")
     print(f"Intervallo:  {args.interval}s")
