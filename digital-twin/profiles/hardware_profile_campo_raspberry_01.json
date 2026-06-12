@@ -6,7 +6,7 @@
       "posizione": {
         "lat": 39.616,
         "lon": 8.823,
-        "descrizione": "Nodo 1 di 10, distribuito sul campo"
+        "descrizione": "Nodo 1 di 50, per test scalabilit\u00e0"
       },
       "sensori": [
         {
@@ -69,7 +69,7 @@
       "posizione": {
         "lat": 39.6163,
         "lon": 8.8233,
-        "descrizione": "Nodo 2 di 10, distribuito sul campo"
+        "descrizione": "Nodo 2 di 50, per test scalabilit\u00e0"
       },
       "sensori": [
         {
@@ -132,7 +132,7 @@
       "posizione": {
         "lat": 39.6166,
         "lon": 8.8236,
-        "descrizione": "Nodo 3 di 10, distribuito sul campo"
+        "descrizione": "Nodo 3 di 50, per test scalabilit\u00e0"
       },
       "sensori": [
         {
@@ -195,7 +195,7 @@
       "posizione": {
         "lat": 39.6169,
         "lon": 8.8239,
-        "descrizione": "Nodo 4 di 10, distribuito sul campo"
+        "descrizione": "Nodo 4 di 50, per test scalabilit\u00e0"
       },
       "sensori": [
         {
@@ -232,7 +232,7 @@
       "posizione": {
         "lat": 39.6172,
         "lon": 8.8242,
-        "descrizione": "Nodo 5 di 10, distribuito sul campo"
+        "descrizione": "Nodo 5 di 50, per test scalabilit\u00e0"
       },
       "sensori": [
         {
@@ -269,7 +269,7 @@
       "posizione": {
         "lat": 39.6175,
         "lon": 8.8245,
-        "descrizione": "Nodo 6 di 10, distribuito sul campo"
+        "descrizione": "Nodo 6 di 50, per test scalabilit\u00e0"
       },
       "sensori": [
         {
@@ -306,7 +306,7 @@
       "posizione": {
         "lat": 39.6178,
         "lon": 8.8248,
-        "descrizione": "Nodo 7 di 10, distribuito sul campo"
+        "descrizione": "Nodo 7 di 50, per test scalabilit\u00e0"
       },
       "sensori": [
         {
@@ -343,7 +343,7 @@
       "posizione": {
         "lat": 39.6181,
         "lon": 8.8251,
-        "descrizione": "Nodo 8 di 10, distribuito sul campo"
+        "descrizione": "Nodo 8 di 50, per test scalabilit\u00e0"
       },
       "sensori": [
         {
@@ -380,7 +380,7 @@
       "posizione": {
         "lat": 39.6184,
         "lon": 8.8254,
-        "descrizione": "Nodo 9 di 10, distribuito sul campo"
+        "descrizione": "Nodo 9 di 50, per test scalabilit\u00e0"
       },
       "sensori": [
         {
@@ -417,7 +417,7 @@
       "posizione": {
         "lat": 39.6187,
         "lon": 8.8257,
-        "descrizione": "Nodo 10 di 10, distribuito sul campo"
+        "descrizione": "Nodo 10 di 50, per test scalabilit\u00e0"
       },
       "sensori": [
         {
@@ -445,6 +445,1798 @@
         {
           "tipo": "battery_voltage",
           "id": "N10_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_11",
+      "posizione": {
+        "lat": 39.616,
+        "lon": 8.823,
+        "descrizione": "Nodo 11 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N11_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N11_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N11_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N11_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N11_BAT",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_ec",
+          "id": "N11_EC",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "ambient_light",
+          "id": "N11_ALS",
+          "attivo": true
+        },
+        {
+          "tipo": "uv_index",
+          "id": "N11_UVI",
+          "attivo": true
+        },
+        {
+          "tipo": "uva_radiation",
+          "id": "N11_UVA",
+          "attivo": true
+        },
+        {
+          "tipo": "solar_panel_voltage",
+          "id": "N11_SOL",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_12",
+      "posizione": {
+        "lat": 39.6163,
+        "lon": 8.8233,
+        "descrizione": "Nodo 12 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N12_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N12_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N12_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N12_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N12_BAT",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_ec",
+          "id": "N12_EC",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "ambient_light",
+          "id": "N12_ALS",
+          "attivo": true
+        },
+        {
+          "tipo": "uv_index",
+          "id": "N12_UVI",
+          "attivo": true
+        },
+        {
+          "tipo": "uva_radiation",
+          "id": "N12_UVA",
+          "attivo": true
+        },
+        {
+          "tipo": "solar_panel_voltage",
+          "id": "N12_SOL",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_13",
+      "posizione": {
+        "lat": 39.6166,
+        "lon": 8.8236,
+        "descrizione": "Nodo 13 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N13_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N13_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N13_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N13_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N13_BAT",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_ec",
+          "id": "N13_EC",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "ambient_light",
+          "id": "N13_ALS",
+          "attivo": true
+        },
+        {
+          "tipo": "uv_index",
+          "id": "N13_UVI",
+          "attivo": true
+        },
+        {
+          "tipo": "uva_radiation",
+          "id": "N13_UVA",
+          "attivo": true
+        },
+        {
+          "tipo": "solar_panel_voltage",
+          "id": "N13_SOL",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_14",
+      "posizione": {
+        "lat": 39.6169,
+        "lon": 8.8239,
+        "descrizione": "Nodo 14 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N14_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N14_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N14_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N14_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N14_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_15",
+      "posizione": {
+        "lat": 39.6172,
+        "lon": 8.8242,
+        "descrizione": "Nodo 15 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N15_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N15_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N15_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N15_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N15_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_16",
+      "posizione": {
+        "lat": 39.6175,
+        "lon": 8.8245,
+        "descrizione": "Nodo 16 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N16_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N16_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N16_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N16_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N16_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_17",
+      "posizione": {
+        "lat": 39.6178,
+        "lon": 8.8248,
+        "descrizione": "Nodo 17 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N17_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N17_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N17_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N17_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N17_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_18",
+      "posizione": {
+        "lat": 39.6181,
+        "lon": 8.8251,
+        "descrizione": "Nodo 18 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N18_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N18_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N18_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N18_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N18_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_19",
+      "posizione": {
+        "lat": 39.6184,
+        "lon": 8.8254,
+        "descrizione": "Nodo 19 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N19_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N19_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N19_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N19_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N19_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_20",
+      "posizione": {
+        "lat": 39.6187,
+        "lon": 8.8257,
+        "descrizione": "Nodo 20 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N20_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N20_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N20_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N20_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N20_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_21",
+      "posizione": {
+        "lat": 39.616,
+        "lon": 8.823,
+        "descrizione": "Nodo 21 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N21_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N21_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N21_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N21_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N21_BAT",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_ec",
+          "id": "N21_EC",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "ambient_light",
+          "id": "N21_ALS",
+          "attivo": true
+        },
+        {
+          "tipo": "uv_index",
+          "id": "N21_UVI",
+          "attivo": true
+        },
+        {
+          "tipo": "uva_radiation",
+          "id": "N21_UVA",
+          "attivo": true
+        },
+        {
+          "tipo": "solar_panel_voltage",
+          "id": "N21_SOL",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_22",
+      "posizione": {
+        "lat": 39.6163,
+        "lon": 8.8233,
+        "descrizione": "Nodo 22 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N22_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N22_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N22_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N22_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N22_BAT",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_ec",
+          "id": "N22_EC",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "ambient_light",
+          "id": "N22_ALS",
+          "attivo": true
+        },
+        {
+          "tipo": "uv_index",
+          "id": "N22_UVI",
+          "attivo": true
+        },
+        {
+          "tipo": "uva_radiation",
+          "id": "N22_UVA",
+          "attivo": true
+        },
+        {
+          "tipo": "solar_panel_voltage",
+          "id": "N22_SOL",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_23",
+      "posizione": {
+        "lat": 39.6166,
+        "lon": 8.8236,
+        "descrizione": "Nodo 23 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N23_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N23_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N23_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N23_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N23_BAT",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_ec",
+          "id": "N23_EC",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "ambient_light",
+          "id": "N23_ALS",
+          "attivo": true
+        },
+        {
+          "tipo": "uv_index",
+          "id": "N23_UVI",
+          "attivo": true
+        },
+        {
+          "tipo": "uva_radiation",
+          "id": "N23_UVA",
+          "attivo": true
+        },
+        {
+          "tipo": "solar_panel_voltage",
+          "id": "N23_SOL",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_24",
+      "posizione": {
+        "lat": 39.6169,
+        "lon": 8.8239,
+        "descrizione": "Nodo 24 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N24_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N24_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N24_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N24_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N24_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_25",
+      "posizione": {
+        "lat": 39.6172,
+        "lon": 8.8242,
+        "descrizione": "Nodo 25 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N25_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N25_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N25_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N25_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N25_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_26",
+      "posizione": {
+        "lat": 39.6175,
+        "lon": 8.8245,
+        "descrizione": "Nodo 26 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N26_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N26_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N26_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N26_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N26_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_27",
+      "posizione": {
+        "lat": 39.6178,
+        "lon": 8.8248,
+        "descrizione": "Nodo 27 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N27_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N27_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N27_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N27_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N27_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_28",
+      "posizione": {
+        "lat": 39.6181,
+        "lon": 8.8251,
+        "descrizione": "Nodo 28 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N28_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N28_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N28_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N28_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N28_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_29",
+      "posizione": {
+        "lat": 39.6184,
+        "lon": 8.8254,
+        "descrizione": "Nodo 29 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N29_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N29_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N29_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N29_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N29_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_30",
+      "posizione": {
+        "lat": 39.6187,
+        "lon": 8.8257,
+        "descrizione": "Nodo 30 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N30_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N30_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N30_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N30_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N30_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_31",
+      "posizione": {
+        "lat": 39.616,
+        "lon": 8.823,
+        "descrizione": "Nodo 31 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N31_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N31_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N31_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N31_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N31_BAT",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_ec",
+          "id": "N31_EC",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "ambient_light",
+          "id": "N31_ALS",
+          "attivo": true
+        },
+        {
+          "tipo": "uv_index",
+          "id": "N31_UVI",
+          "attivo": true
+        },
+        {
+          "tipo": "uva_radiation",
+          "id": "N31_UVA",
+          "attivo": true
+        },
+        {
+          "tipo": "solar_panel_voltage",
+          "id": "N31_SOL",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_32",
+      "posizione": {
+        "lat": 39.6163,
+        "lon": 8.8233,
+        "descrizione": "Nodo 32 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N32_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N32_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N32_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N32_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N32_BAT",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_ec",
+          "id": "N32_EC",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "ambient_light",
+          "id": "N32_ALS",
+          "attivo": true
+        },
+        {
+          "tipo": "uv_index",
+          "id": "N32_UVI",
+          "attivo": true
+        },
+        {
+          "tipo": "uva_radiation",
+          "id": "N32_UVA",
+          "attivo": true
+        },
+        {
+          "tipo": "solar_panel_voltage",
+          "id": "N32_SOL",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_33",
+      "posizione": {
+        "lat": 39.6166,
+        "lon": 8.8236,
+        "descrizione": "Nodo 33 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N33_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N33_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N33_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N33_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N33_BAT",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_ec",
+          "id": "N33_EC",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "ambient_light",
+          "id": "N33_ALS",
+          "attivo": true
+        },
+        {
+          "tipo": "uv_index",
+          "id": "N33_UVI",
+          "attivo": true
+        },
+        {
+          "tipo": "uva_radiation",
+          "id": "N33_UVA",
+          "attivo": true
+        },
+        {
+          "tipo": "solar_panel_voltage",
+          "id": "N33_SOL",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_34",
+      "posizione": {
+        "lat": 39.6169,
+        "lon": 8.8239,
+        "descrizione": "Nodo 34 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N34_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N34_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N34_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N34_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N34_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_35",
+      "posizione": {
+        "lat": 39.6172,
+        "lon": 8.8242,
+        "descrizione": "Nodo 35 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N35_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N35_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N35_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N35_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N35_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_36",
+      "posizione": {
+        "lat": 39.6175,
+        "lon": 8.8245,
+        "descrizione": "Nodo 36 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N36_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N36_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N36_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N36_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N36_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_37",
+      "posizione": {
+        "lat": 39.6178,
+        "lon": 8.8248,
+        "descrizione": "Nodo 37 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N37_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N37_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N37_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N37_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N37_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_38",
+      "posizione": {
+        "lat": 39.6181,
+        "lon": 8.8251,
+        "descrizione": "Nodo 38 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N38_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N38_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N38_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N38_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N38_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_39",
+      "posizione": {
+        "lat": 39.6184,
+        "lon": 8.8254,
+        "descrizione": "Nodo 39 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N39_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N39_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N39_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N39_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N39_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_40",
+      "posizione": {
+        "lat": 39.6187,
+        "lon": 8.8257,
+        "descrizione": "Nodo 40 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N40_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N40_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N40_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N40_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N40_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_41",
+      "posizione": {
+        "lat": 39.616,
+        "lon": 8.823,
+        "descrizione": "Nodo 41 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N41_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N41_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N41_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N41_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N41_BAT",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_ec",
+          "id": "N41_EC",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "ambient_light",
+          "id": "N41_ALS",
+          "attivo": true
+        },
+        {
+          "tipo": "uv_index",
+          "id": "N41_UVI",
+          "attivo": true
+        },
+        {
+          "tipo": "uva_radiation",
+          "id": "N41_UVA",
+          "attivo": true
+        },
+        {
+          "tipo": "solar_panel_voltage",
+          "id": "N41_SOL",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_42",
+      "posizione": {
+        "lat": 39.6163,
+        "lon": 8.8233,
+        "descrizione": "Nodo 42 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N42_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N42_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N42_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N42_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N42_BAT",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_ec",
+          "id": "N42_EC",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "ambient_light",
+          "id": "N42_ALS",
+          "attivo": true
+        },
+        {
+          "tipo": "uv_index",
+          "id": "N42_UVI",
+          "attivo": true
+        },
+        {
+          "tipo": "uva_radiation",
+          "id": "N42_UVA",
+          "attivo": true
+        },
+        {
+          "tipo": "solar_panel_voltage",
+          "id": "N42_SOL",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_43",
+      "posizione": {
+        "lat": 39.6166,
+        "lon": 8.8236,
+        "descrizione": "Nodo 43 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N43_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N43_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N43_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N43_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N43_BAT",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_ec",
+          "id": "N43_EC",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "ambient_light",
+          "id": "N43_ALS",
+          "attivo": true
+        },
+        {
+          "tipo": "uv_index",
+          "id": "N43_UVI",
+          "attivo": true
+        },
+        {
+          "tipo": "uva_radiation",
+          "id": "N43_UVA",
+          "attivo": true
+        },
+        {
+          "tipo": "solar_panel_voltage",
+          "id": "N43_SOL",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_44",
+      "posizione": {
+        "lat": 39.6169,
+        "lon": 8.8239,
+        "descrizione": "Nodo 44 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N44_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N44_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N44_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N44_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N44_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_45",
+      "posizione": {
+        "lat": 39.6172,
+        "lon": 8.8242,
+        "descrizione": "Nodo 45 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N45_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N45_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N45_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N45_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N45_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_46",
+      "posizione": {
+        "lat": 39.6175,
+        "lon": 8.8245,
+        "descrizione": "Nodo 46 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N46_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N46_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N46_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N46_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N46_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_47",
+      "posizione": {
+        "lat": 39.6178,
+        "lon": 8.8248,
+        "descrizione": "Nodo 47 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N47_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N47_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N47_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N47_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N47_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_48",
+      "posizione": {
+        "lat": 39.6181,
+        "lon": 8.8251,
+        "descrizione": "Nodo 48 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N48_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N48_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N48_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N48_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N48_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_49",
+      "posizione": {
+        "lat": 39.6184,
+        "lon": 8.8254,
+        "descrizione": "Nodo 49 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N49_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N49_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N49_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N49_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N49_BAT",
+          "attivo": true
+        }
+      ]
+    },
+    {
+      "node_id": "campo_raspberry_01_node_50",
+      "posizione": {
+        "lat": 39.6187,
+        "lon": 8.8257,
+        "descrizione": "Nodo 50 di 50, per test scalabilit\u00e0"
+      },
+      "sensori": [
+        {
+          "tipo": "air_temp",
+          "id": "N50_AT",
+          "attivo": true
+        },
+        {
+          "tipo": "air_rh",
+          "id": "N50_RH",
+          "attivo": true
+        },
+        {
+          "tipo": "soil_temp",
+          "id": "N50_ST",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "soil_moisture",
+          "id": "N50_SM",
+          "profondita_cm": 30,
+          "attivo": true
+        },
+        {
+          "tipo": "battery_voltage",
+          "id": "N50_BAT",
           "attivo": true
         }
       ]
