@@ -34,7 +34,7 @@ services:
       MONGO_URL: mongodb://mongo:27017
       MONGO_DB: agros
       TESTBED_ID: campo_raspberry_01
-      N_NODI: "50"               # <-- Aggiornato a 50 nodi
+      N_NODI: "100"               # <-- Aggiornato a 100 nodi
       REAL_TIME: "true"          # usa l'ora reale corrente per ogni burst
       BURST_INTERVAL_SEC: "600"  # 600s = 10 minuti reali tra un burst e l'altro
       RESET_ON_START: "true"
