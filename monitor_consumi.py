@@ -105,7 +105,47 @@ def get_sample(container):
     except ValueError:
         mem_pct = 0.0
 
-    return {"cpu_pct": cpu, "mem_mb": mem_mb, "mem_pct": mem_pct}
+    mem_source = "stats"
+    # Su Raspberry Pi OS la memory cgroup e' spesso disabilitata nel kernel:
+    # in quel caso `docker stats` riporta 0B per la memoria. Quando capita,
+    # leggiamo la RSS reale del processo principale dentro il container da
+    # /proc, che funziona indipendentemente dai cgroup.
+    if mem_mb == 0.0:
+        proc_mem = get_mem_from_proc(container)
+        if proc_mem is not None:
+            mem_mb = proc_mem
+            mem_source = "proc"
+
+    return {"cpu_pct": cpu, "mem_mb": mem_mb, "mem_pct": mem_pct, "mem_source": mem_source}
+
+
+def get_mem_from_proc(container):
+    """
+    Legge la RSS (memoria residente reale) del processo principale (PID 1)
+    dentro il container, da /proc/1/status. Metodo robusto che NON dipende
+    dai cgroup: funziona anche quando `docker stats` riporta 0B perche' il
+    controller memory non e' abilitato nel kernel (tipico su Raspberry Pi OS).
+    Ritorna i MB oppure None se la lettura non riesce.
+    """
+    try:
+        out = subprocess.run(
+            ["docker", "exec", container, "cat", "/proc/1/status"],
+            capture_output=True, text=True, timeout=10,
+        )
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        return None
+    if out.returncode != 0:
+        return None
+    for line in out.stdout.splitlines():
+        if line.startswith("VmRSS:"):
+            # formato: "VmRSS:    123456 kB"
+            parts = line.split()
+            if len(parts) >= 2:
+                try:
+                    return float(parts[1]) / 1024.0  # kB -> MB
+                except ValueError:
+                    return None
+    return None
 
 
 def parse_mem_to_mb(s):
@@ -140,7 +180,7 @@ def main():
     samples = []
     csv_file = open(args.out, "w", newline="")
     writer = csv.writer(csv_file)
-    writer.writerow(["timestamp", "elapsed_s", "cpu_pct", "mem_mb", "mem_pct", "stato"])
+    writer.writerow(["timestamp", "elapsed_s", "cpu_pct", "mem_mb", "mem_pct", "mem_source", "stato"])
 
     start = time.time()
     running = {"v": True}
@@ -176,13 +216,16 @@ def main():
 
         ts = datetime.now(timezone.utc).isoformat()
         writer.writerow([ts, f"{elapsed:.1f}", f"{s['cpu_pct']:.2f}",
-                         f"{s['mem_mb']:.1f}", f"{s['mem_pct']:.2f}", stato])
+                         f"{s['mem_mb']:.1f}", f"{s['mem_pct']:.2f}",
+                         s.get("mem_source", "stats"), stato])
         csv_file.flush()
         samples.append({"cpu_pct": s["cpu_pct"], "mem_mb": s["mem_mb"], "stato": stato})
 
         if not args.quiet:
             marker = " <-- calcolo" if s["cpu_pct"] >= args.cpu_threshold else ""
-            print(f"  [{elapsed:7.1f}s] CPU {s['cpu_pct']:6.2f}%  RAM {s['mem_mb']:7.1f} MB  ({stato}){marker}")
+            src = s.get("mem_source", "stats")
+            src_tag = " [RAM via /proc]" if src == "proc" else ""
+            print(f"  [{elapsed:7.1f}s] CPU {s['cpu_pct']:6.2f}%  RAM {s['mem_mb']:7.1f} MB  ({stato}){marker}{src_tag}")
 
         sleep_left = args.interval - (time.time() - loop_t)
         if sleep_left > 0:
